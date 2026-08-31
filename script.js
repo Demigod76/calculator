@@ -33,3 +33,10 @@ numberButtons.forEach((button) => {
         display.textContent = currentInput;
     });
 });
+
+const clearButton = document.querySelector(".clear");
+
+clearButton.addEventListener("click", () => {
+    currentInput = "";
+    display.textContent = "0";
+});
