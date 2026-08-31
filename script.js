@@ -38,5 +38,27 @@ const clearButton = document.querySelector(".clear");
 
 clearButton.addEventListener("click", () => {
     currentInput = "";
+    firstNumber = null;
     display.textContent = "0";
+});
+
+const operatorButton = document.querySelectorAll(".operator");
+
+let firstNumber = null;
+let operatorSelected = null;
+
+operatorButton.forEach((button) => {
+    button.addEventListener("click", () => {
+       if (firstNumber !== null && operatorSelected !== null && currentInput !== "") {
+        let result = operate(operatorSelected, firstNumber, Number(currentInput));
+        display.textContent = result;
+        firstNumber = result;
+
+        } else if (firstNumber === null) {
+            firstNumber = Number(currentInput);
+        }
+
+        operatorSelected = button.textContent;
+        currentInput = "";
+    });
 });
