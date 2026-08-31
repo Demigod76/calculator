@@ -22,3 +22,14 @@ function operate(operator, a, b) {
         case "/": return divide(a, b);
     }
 }
+
+const numberButtons = document.querySelectorAll(".number");
+const display = document.querySelector(".display");
+let currentInput = "";
+
+numberButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        currentInput += button.textContent;
+        display.textContent = currentInput;
+    });
+});
