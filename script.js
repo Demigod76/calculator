@@ -39,6 +39,7 @@ const clearButton = document.querySelector(".clear");
 clearButton.addEventListener("click", () => {
     currentInput = "";
     firstNumber = null;
+    operatorSelected = null;
     display.textContent = "0";
 });
 
@@ -50,15 +51,52 @@ let operatorSelected = null;
 operatorButton.forEach((button) => {
     button.addEventListener("click", () => {
        if (firstNumber !== null && operatorSelected !== null && currentInput !== "") {
-        let result = operate(operatorSelected, firstNumber, Number(currentInput));
+        let result = safeOperate(operatorSelected, firstNumber, Number(currentInput));
         display.textContent = result;
         firstNumber = result;
 
-        } else if (firstNumber === null) {
+        if (result === "Nice try, but you can't divide by zero!") {
+            firstNumber = null;
+            operatorSelected = null;
+            currentInput = "";
+            return;
+        } else {
+            firstNumber = result;
+        }
+        }
+        else if (firstNumber === null) {
             firstNumber = Number(currentInput);
         }
-
+    
         operatorSelected = button.textContent;
         currentInput = "";
     });
 });
+
+const equalButton = document.querySelector(".equals");
+
+equalButton.addEventListener("click", () =>{
+    let finalResult = safeOperate(operatorSelected, firstNumber, Number(currentInput));
+
+    if (finalResult === "Nice try, but you can't divide by zero!") {
+        display.textContent = finalResult;
+        firstNumber = null;
+        operatorSelected = null;
+        currentInput = "";
+        return;
+    }
+
+    else {
+    display.textContent = finalResult;
+    }
+
+    firstNumber = finalResult;
+    currentInput = "";
+})
+
+function safeOperate(operator, a, b) {
+    if (operator === "/" && b === 0) {
+        return "Nice try, but you can't divide by zero!";
+    }
+    return operate(operator, a, b); 
+}
