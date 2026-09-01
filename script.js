@@ -76,6 +76,10 @@ operatorButton.forEach((button) => {
 });
 
 equalButton.addEventListener("click", () =>{
+    if (firstNumber === null || operatorSelected === null || currentInput === "") {
+        return;
+    }
+    
     let finalResult = safeOperate(operatorSelected, firstNumber, Number(currentInput));
 
     if (finalResult === "Nice try, but you can't divide by zero!") {
