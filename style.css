@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 320px;
+    padding: 12px;
 }
 
 button {
@@ -9,11 +10,19 @@ button {
     height: 60px;
     text-align: center;
     font-size: 20px;
+    
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s;
 }
 
 .calculator {
     width: 350px;
     height: 400px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .display {
@@ -24,3 +33,32 @@ button {
     font-size: 24px;
     background-color: #eee;
 }
+
+.number {
+    background-color: lightgray;
+    color: black;
+}
+
+.number:hover {
+    background-color: #555;
+}
+
+.operator, .equals {
+    background-color: #ff9500;
+    color: black;
+}
+
+.operator:hover, .equals:hover {
+    background-color: #ffaa33;
+}
+
+.clear {
+    background-color: #a5a5a5;
+    color: black;
+}
+
+.spacer {
+    visibility: hidden;
+    
+}
+
