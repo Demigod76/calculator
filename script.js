@@ -52,17 +52,17 @@ operatorButton.forEach((button) => {
     button.addEventListener("click", () => {
        if (firstNumber !== null && operatorSelected !== null && currentInput !== "") {
         let result = safeOperate(operatorSelected, firstNumber, Number(currentInput));
-        display.textContent = result;
-        firstNumber = result;
-        decimalButton.disabled = false;
 
             if (result === "Nice try, but you can't divide by zero!") {
+                display.textContent = result;
                 firstNumber = null;
                 operatorSelected = null;
                 currentInput = "";
                 return;
             } else {
+                display.textContent = formatResult(result);
                 firstNumber = result;
+                decimalButton.disabled = false;
             }
         }
         else if (firstNumber === null) {
@@ -79,7 +79,7 @@ equalButton.addEventListener("click", () =>{
     if (firstNumber === null || operatorSelected === null || currentInput === "") {
         return;
     }
-    
+
     let finalResult = safeOperate(operatorSelected, firstNumber, Number(currentInput));
 
     if (finalResult === "Nice try, but you can't divide by zero!") {
@@ -91,7 +91,7 @@ equalButton.addEventListener("click", () =>{
     }
 
     else {
-    display.textContent = finalResult;
+    display.textContent = formatResult(finalResult);
     }
 
     firstNumber = finalResult;
@@ -113,3 +113,7 @@ decimalButton.addEventListener("click", () => {
         display.textContent = currentInput;
         decimalButton.disabled = true;
 });
+
+function formatResult(num) {
+    return Math.round(num * 100) / 100;
+}
