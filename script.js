@@ -25,6 +25,12 @@ function operate(operator, a, b) {
 
 const numberButtons = document.querySelectorAll(".number");
 const display = document.querySelector(".display");
+const decimalButton = document.querySelector(".decimal");
+const clearButton = document.querySelector(".clear");
+const operatorButton = document.querySelectorAll(".operator");
+const equalButton = document.querySelector(".equals");
+let firstNumber = null;
+let operatorSelected = null;
 let currentInput = "";
 
 numberButtons.forEach((button) => {
@@ -34,19 +40,13 @@ numberButtons.forEach((button) => {
     });
 });
 
-const clearButton = document.querySelector(".clear");
-
 clearButton.addEventListener("click", () => {
     currentInput = "";
     firstNumber = null;
     operatorSelected = null;
     display.textContent = "0";
+    decimalButton.disabled = false;
 });
-
-const operatorButton = document.querySelectorAll(".operator");
-
-let firstNumber = null;
-let operatorSelected = null;
 
 operatorButton.forEach((button) => {
     button.addEventListener("click", () => {
@@ -54,15 +54,16 @@ operatorButton.forEach((button) => {
         let result = safeOperate(operatorSelected, firstNumber, Number(currentInput));
         display.textContent = result;
         firstNumber = result;
+        decimalButton.disabled = false;
 
-        if (result === "Nice try, but you can't divide by zero!") {
-            firstNumber = null;
-            operatorSelected = null;
-            currentInput = "";
-            return;
-        } else {
-            firstNumber = result;
-        }
+            if (result === "Nice try, but you can't divide by zero!") {
+                firstNumber = null;
+                operatorSelected = null;
+                currentInput = "";
+                return;
+            } else {
+                firstNumber = result;
+            }
         }
         else if (firstNumber === null) {
             firstNumber = Number(currentInput);
@@ -70,10 +71,9 @@ operatorButton.forEach((button) => {
     
         operatorSelected = button.textContent;
         currentInput = "";
+        decimalButton.disabled = false;
     });
 });
-
-const equalButton = document.querySelector(".equals");
 
 equalButton.addEventListener("click", () =>{
     let finalResult = safeOperate(operatorSelected, firstNumber, Number(currentInput));
@@ -92,6 +92,7 @@ equalButton.addEventListener("click", () =>{
 
     firstNumber = finalResult;
     currentInput = "";
+    decimalButton.disabled = false;
 })
 
 function safeOperate(operator, a, b) {
@@ -100,3 +101,11 @@ function safeOperate(operator, a, b) {
     }
     return operate(operator, a, b); 
 }
+
+
+
+decimalButton.addEventListener("click", () => {
+        currentInput += ".";
+        display.textContent = currentInput;
+        decimalButton.disabled = true;
+});
